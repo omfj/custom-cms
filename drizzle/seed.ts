@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { db } from "~/db/drizzle.server";
+import { db } from "@/db/drizzle";
 import {
   companies,
   eventTypes,
@@ -11,9 +11,9 @@ import {
   locations,
   posts,
   profiles,
-} from "~/db/schemas";
+} from "@/db/schemas";
 import { faker } from "@faker-js/faker";
-import { slugify } from "~/lib/slugify";
+import { slugify } from "@/lib/slugify";
 
 async function seed() {
   /**

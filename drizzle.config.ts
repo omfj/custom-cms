@@ -3,7 +3,7 @@ import type { Config } from "drizzle-kit";
 
 export default {
   out: "./drizzle/migrations",
-  schema: "./app/db/schemas",
+  schema: "./src/db/schemas",
   driver: "libsql",
   verbose: true,
   dbCredentials: {

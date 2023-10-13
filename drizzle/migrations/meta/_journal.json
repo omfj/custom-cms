@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1697049999020,
-      "tag": "0000_perfect_klaw",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1697052159530,
-      "tag": "0001_shiny_cardiac",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1697052630453,
-      "tag": "0002_brief_talon",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1697052943514,
-      "tag": "0003_wooden_sandman",
+      "when": 1697219688870,
+      "tag": "0000_supreme_ender_wiggin",
       "breakpoints": true
     }
   ]
