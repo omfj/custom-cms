@@ -7,23 +7,40 @@
     "build": "remix build",
     "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:migrate": "tsx ./drizzle/migrate.ts",
+    "db:seed": "tsx ./drizzle/seed.ts",
+    "db:studio": "drizzle-kit studio",
+    "db:refresh": "rm -rf db.db && pnpm run db:migrate && pnpm run db:seed"
   },
   "dependencies": {
+    "@libsql/client": "^0.3.5",
     "@remix-run/css-bundle": "^2.0.1",
     "@remix-run/node": "^2.0.1",
     "@remix-run/react": "^2.0.1",
     "@remix-run/serve": "^2.0.1",
+    "bcrypt": "^5.1.1",
+    "date-fns": "^2.30.0",
+    "drizzle-orm": "^0.28.6",
     "isbot": "^3.6.8",
+    "lucide-react": "^0.285.0",
+    "nanoid": "^5.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.1.0",
     "@remix-run/dev": "^2.0.1",
     "@remix-run/eslint-config": "^2.0.1",
+    "@tailwindcss/forms": "^0.5.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.19.13",
     "eslint": "^8.38.0",
+    "tailwindcss": "^3.3.3",
+    "tsx": "^3.13.0",
     "typescript": "^5.1.6"
   },
   "engines": {
