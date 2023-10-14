@@ -1,3 +1,4 @@
+import { SidebarItem } from "@/components/sidebar-item";
 import { db } from "@/db/drizzle";
 import { Schema, isSchema, schemaLabels, schemas } from "@/lib/schemas";
 import { LayoutProps } from "@/types";
@@ -154,15 +155,14 @@ export default async function CMSResourceLayout({
 
         <section>
           <nav className="flex flex-col w-full lg:overflow-y-auto">
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col">
               {items.map((item) => (
-                <Link
+                <SidebarItem
                   key={item.id}
-                  className="px-4 py-2 hover:bg-[#2e2e2e] w-full"
                   href={`/cms/${resource}/item/${item.id}`}
                 >
                   <li className="truncate">{item.title}</li>
-                </Link>
+                </SidebarItem>
               ))}
             </ul>
           </nav>
