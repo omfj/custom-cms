@@ -8,6 +8,7 @@ import {
   GroupTypeForm,
   JobForm,
   JobTypeForm,
+  ProfileForm,
 } from "../../../../components/forms";
 import { db } from "@/db/drizzle";
 
@@ -114,6 +115,14 @@ export default async function CreateItem({ params }: Props) {
           }}
           companies={companies}
           jobTypes={jobTypes}
+        />
+      )}
+      {resource === "profiles" && (
+        <ProfileForm
+          title="Lag ny profil"
+          form={{
+            name: "",
+          }}
         />
       )}
     </>

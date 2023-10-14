@@ -1,6 +1,6 @@
+import { SidebarItem } from "@/components/sidebar-item";
 import { schemaHrefs, schemaLabels, schemas } from "@/lib/schemas";
 import { LayoutProps } from "@/types";
-import Link from "next/link";
 
 export default function CMSLayout({ children }: LayoutProps) {
   return (
@@ -14,15 +14,11 @@ export default function CMSLayout({ children }: LayoutProps) {
 
         <section>
           <nav className="flex flex-col w-full lg:overflow-y-auto">
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col">
               {schemas.map((schema) => (
-                <Link
-                  key={schema}
-                  className="px-4 py-2 hover:bg-[#2e2e2e] w-full"
-                  href={schemaHrefs[schema]}
-                >
-                  <li>{schemaLabels[schema]}</li>
-                </Link>
+                <SidebarItem key={schema} href={schemaHrefs[schema]}>
+                  <li className="truncate">{schemaLabels[schema]}</li>
+                </SidebarItem>
               ))}
             </ul>
           </nav>

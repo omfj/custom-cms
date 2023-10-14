@@ -2,33 +2,41 @@
 
 import { db } from "@/db/drizzle";
 import {
-  Event,
-  Job,
-  Post,
-  Profile,
+  CompanyInsert,
+  EventInsert,
+  JobInsert,
+  PostInsert,
+  ProfileInsert,
+  companies,
   events,
   jobs,
   posts,
   profiles,
 } from "@/db/schemas";
+import { slugify } from "@/lib/slugify";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 type CreateItemProps =
   | {
       type: "events";
-      item: Event;
+      item: EventInsert;
     }
   | {
       type: "posts";
-      item: Post;
+      item: PostInsert;
     }
   | {
       type: "profiles";
-      item: Profile;
+      item: ProfileInsert;
     }
   | {
       type: "jobs";
-      item: Job;
+      item: JobInsert;
+    }
+  | {
+      type: "companies";
+      item: Omit<CompanyInsert, "id">;
     };
 
 export async function createItem({ type, item }: CreateItemProps) {
@@ -36,7 +44,16 @@ export async function createItem({ type, item }: CreateItemProps) {
     await db
       .insert(events)
       .values({ ...item })
+      .onConflictDoUpdate({
+        set: {
+          ...item,
+        },
+        target: events.slug,
+        where: eq(events.slug, item.slug),
+      })
       .returning();
+
+    revalidatePath("/cms/events");
 
     return;
   }
@@ -47,6 +64,8 @@ export async function createItem({ type, item }: CreateItemProps) {
       .values({ ...item })
       .returning();
 
+    revalidatePath("/cms/posts");
+
     return;
   }
 
@@ -55,6 +74,19 @@ export async function createItem({ type, item }: CreateItemProps) {
       .insert(profiles)
       .values({ ...item })
       .returning();
+
+    revalidatePath("/cms/profiles");
+
+    return;
+  }
+
+  if (type === "companies") {
+    await db
+      .insert(companies)
+      .values({ ...item, id: slugify(item.name) })
+      .returning();
+
+    revalidatePath("/cms/companies");
 
     return;
   }
