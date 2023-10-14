@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { profiles } from "./profiles";
 
 export const posts = sqliteTable("post", {
-  id: text("id", { length: 21 })
+  slug: text("id", { length: 21 })
     .primaryKey()
     .$defaultFn(() => nanoid(21)),
   title: text("title", { length: 255 }).notNull(),
@@ -20,7 +20,7 @@ export const posts = sqliteTable("post", {
 
 export const postsRelations = relations(posts, ({ one }) => ({
   publishedBy: one(profiles, {
-    fields: [posts.id],
+    fields: [posts.publishedBy],
     references: [profiles.id],
   }),
 }));

@@ -32,7 +32,7 @@ const getItems = async (resource: Schema) => {
       orderBy: (p) => desc(p.createdAt),
     });
     return posts.map((post) => ({
-      id: post.id,
+      id: post.slug,
       title: post.title,
     }));
   }
@@ -132,36 +132,41 @@ export default async function CMSResourceLayout({
 
   return (
     <>
-      <aside className="z-30 lg:block w-full max-w-[18rem] sticky top-0 max-h-screen overflow-y-auto h-screen border-r border-r-neutral-700 hidden p-2">
-        <h2 className="text-lg font-bold p-4">
-          {schemaLabels[resource as (typeof schemas)[number]]}
-        </h2>
+      <aside className="z-30 lg:block w-full max-w-[18rem] sticky top-0 max-h-screen overflow-y-auto h-screen border-r border-r-neutral-700 hidden">
+        <section className="bg-neutral-900">
+          <h2 className="text-lg h-14 border-b border-neutral-700 flex items-center font-semibold px-4">
+            {schemaLabels[resource as (typeof schemas)[number]]}
+          </h2>
+        </section>
 
-        <nav className="flex flex-col w-full lg:overflow-y-auto">
-          <ul className="flex flex-col gap-1">
-            <li>
-              <Link
-                className="px-4 py-2 rounded-md border border-neutral-700 justify-between hover:bg-[#2e2e2e] flex items-center w-full"
-                href={`/cms/${resource}/new`}
-              >
-                <span>Lag ny</span>
-                <PlusIcon className="inline-block" strokeWidth="1.25px" />
-              </Link>
-            </li>
+        <section>
+          <Link
+            className="px-4 py-2 bg-lime-900 hover:bg-lime-800 justify-between flex items-center w-full"
+            href={`/cms/${resource}/new`}
+          >
+            <span>Lag ny</span>
+            <PlusIcon
+              className="inline-block text-neutral-400"
+              strokeWidth="1.25px"
+            />
+          </Link>
+        </section>
 
-            <hr className="my-3 border border-neutral-700" />
-
-            {items.map((item) => (
-              <Link
-                key={item.id}
-                className="px-4 py-2 rounded-md hover:bg-[#2e2e2e] w-full"
-                href={`/cms/${resource}/item/${item.id}`}
-              >
-                <li className="truncate">{item.title}</li>
-              </Link>
-            ))}
-          </ul>
-        </nav>
+        <section>
+          <nav className="flex flex-col w-full lg:overflow-y-auto">
+            <ul className="flex flex-col gap-1">
+              {items.map((item) => (
+                <Link
+                  key={item.id}
+                  className="px-4 py-2 hover:bg-[#2e2e2e] w-full"
+                  href={`/cms/${resource}/item/${item.id}`}
+                >
+                  <li className="truncate">{item.title}</li>
+                </Link>
+              ))}
+            </ul>
+          </nav>
+        </section>
       </aside>
 
       {children}

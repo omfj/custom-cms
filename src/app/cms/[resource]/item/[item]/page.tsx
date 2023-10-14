@@ -1,7 +1,17 @@
-import { db } from "@/db/drizzle";
 import { isSchema, schemaTables } from "@/lib/schemas";
-import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import {
+  CompanyView,
+  EventTypeView,
+  EventView,
+  GroupTypeView,
+  GroupView,
+  JobTypeView,
+  JobView,
+  LocationView,
+  PostView,
+  ProfileView,
+} from "./views";
 
 type Props = {
   params: {
@@ -23,27 +33,19 @@ export default async function ItemPage({ params }: Props) {
     return notFound();
   }
 
-  let i = null;
-
-  if ("id" in table) {
-    i = (await db.select().from(table).where(eq(table.id, item)))[0];
-  } else if ("slug" in table) {
-    i = (await db.select().from(table).where(eq(table.slug, item)))[0];
-  }
-
-  if (i === null) {
-    return notFound();
-  }
-
   return (
-    <main className="w-full p-8 flex flex-col gap-4">
-      <h1>
-        You are viewing an {resource}/{item}
-      </h1>
-
-      <div>
-        <p>{JSON.stringify(i, null, 2)}</p>
-      </div>
-    </main>
+    <>
+      {resource === "companies" && <CompanyView item={item} />}
+      {resource === "event-types" && <EventTypeView item={item} />}
+      {resource === "events" && <EventView item={item} />}
+      {resource === "group-types" && <GroupTypeView item={item} />}
+      {resource === "groups" && <GroupView item={item} />}
+      {resource === "job-types" && <JobTypeView item={item} />}
+      {resource === "jobs" && <JobView item={item} />}
+      {resource === "locations" && <LocationView item={item} />}
+      {resource === "meetings" && null}
+      {resource === "posts" && <PostView item={item} />}
+      {resource === "profiles" && <ProfileView item={item} />}
+    </>
   );
 }

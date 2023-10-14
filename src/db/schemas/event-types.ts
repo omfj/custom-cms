@@ -4,7 +4,7 @@ import { relations } from "drizzle-orm";
 
 export const eventTypes = sqliteTable("event_type", {
   id: text("id").primaryKey(),
-  name: text("name"),
+  name: text("name").notNull(),
 });
 
 export const eventTypesRelations = relations(eventTypes, ({ many }) => ({

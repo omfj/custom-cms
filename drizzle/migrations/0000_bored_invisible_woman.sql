@@ -7,7 +7,7 @@ CREATE TABLE `companies` (
 --> statement-breakpoint
 CREATE TABLE `event_type` (
 	`id` text PRIMARY KEY NOT NULL,
-	`name` text
+	`name` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `event` (

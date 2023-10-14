@@ -7,7 +7,7 @@ export const profiles = sqliteTable("profile", {
   id: text("id", { length: 21 })
     .primaryKey()
     .$defaultFn(() => nanoid()),
-  name: text("name"),
+  name: text("name").notNull(),
 });
 
 export const profilesRelations = relations(profiles, ({ many }) => ({

@@ -1,19 +1,74 @@
-import { Event, Group } from "@/db/schemas";
+"use server";
 
-type Item =
-  | (Event & {
-      __type: "event";
-    })
-  | (Group & {
-      __type: "group";
-    });
+import { db } from "@/db/drizzle";
+import {
+  Event,
+  Job,
+  Post,
+  Profile,
+  events,
+  jobs,
+  posts,
+  profiles,
+} from "@/db/schemas";
+import { revalidatePath } from "next/cache";
 
-export async function create(item: Item) {
-  if (item.__type === "event") {
-    return null;
+type CreateItemProps =
+  | {
+      type: "events";
+      item: Event;
+    }
+  | {
+      type: "posts";
+      item: Post;
+    }
+  | {
+      type: "profiles";
+      item: Profile;
+    }
+  | {
+      type: "jobs";
+      item: Job;
+    };
+
+export async function createItem({ type, item }: CreateItemProps) {
+  if (type === "events") {
+    await db
+      .insert(events)
+      .values({ ...item })
+      .returning();
+
+    return;
   }
 
-  if (item.__type === "group") {
-    return null;
+  if (type === "posts") {
+    await db
+      .insert(posts)
+      .values({ ...item })
+      .returning();
+
+    return;
+  }
+
+  if (type === "profiles") {
+    await db
+      .insert(profiles)
+      .values({ ...item })
+      .returning();
+
+    return;
+  }
+
+  if (type === "jobs") {
+    await db
+      .insert(jobs)
+      .values({
+        ...item,
+      })
+      .returning();
+
+    revalidatePath("/cms/jobs");
+
+    return;
   }
 }
