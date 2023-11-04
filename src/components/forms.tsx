@@ -180,16 +180,16 @@ export function EventForm({
         </FormControl>
         <FormControl>
           <Label>Slug:</Label>
-          <div className="grid grid-cols-4 gap-1">
+          <div className="flex flex-row items-center gap-1">
             <Input
-              className="col-span-3"
+              className="flex-1"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
             />
             <button
               type="button"
               onClick={generateSlug}
-              className="border border-neutral-700 py-1 px-2"
+              className="border border-neutral-700 py-1 px-4"
             >
               Generer
             </button>

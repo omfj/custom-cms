@@ -1,4 +1,5 @@
 import { SidebarItem } from "@/components/sidebar-item";
+import { SidebarList } from "@/components/sidebar-list";
 import { db } from "@/db/drizzle";
 import { Schema, isSchema, schemaLabels, schemas } from "@/lib/schemas";
 import { LayoutProps } from "@/types";
@@ -136,7 +137,7 @@ export default async function CMSResourceLayout({
       <aside className="z-30 lg:block w-full max-w-[18rem] sticky top-0 max-h-screen overflow-y-auto h-screen border-r border-r-neutral-700 hidden">
         <section className="bg-neutral-900">
           <h2 className="text-lg h-14 border-b border-neutral-700 flex items-center font-semibold px-4">
-            {schemaLabels[resource as (typeof schemas)[number]]}
+            {schemaLabels[resource]}
           </h2>
         </section>
 
@@ -153,20 +154,7 @@ export default async function CMSResourceLayout({
           </Link>
         </section>
 
-        <section>
-          <nav className="flex flex-col w-full lg:overflow-y-auto">
-            <ul className="flex flex-col">
-              {items.map((item) => (
-                <SidebarItem
-                  key={item.id}
-                  href={`/cms/${resource}/item/${item.id}`}
-                >
-                  <li className="truncate">{item.title}</li>
-                </SidebarItem>
-              ))}
-            </ul>
-          </nav>
-        </section>
+        <SidebarList resource={resource} items={items} />
       </aside>
 
       {children}

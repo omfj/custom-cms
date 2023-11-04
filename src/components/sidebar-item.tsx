@@ -15,7 +15,7 @@ export function SidebarItem({ href, children }: SidebarItemProps) {
 
   return (
     <Link
-      className={clsx("px-4 py-2 hover:bg-[#2e2e2e] w-full", {
+      className={clsx("px-4 py-2 h-10 hover:bg-[#2e2e2e] w-full", {
         "bg-[#2e2e2e]": isActive,
       })}
       href={href}
